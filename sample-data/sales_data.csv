@@ -1,0 +1,5 @@
+date,product_category,revenue,units_sold,region
+2026-01-01,Electronics,1500,5,North
+2026-01-02,Software,3000,10,South
+2026-01-03,Hardware,2000,8,East
+2026-01-04,Electronics,2500,7,West
