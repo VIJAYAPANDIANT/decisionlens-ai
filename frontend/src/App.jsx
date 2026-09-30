@@ -113,7 +113,7 @@ export default function App() {
           <button 
             onClick={handleUploadClick}
             disabled={isUploading}
-            className="flex items-center gap-2 bg-blue-600 hover:bg-blue-500 disabled:bg-blue-800 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors"
+            className="flex items-center gap-2 bg-blue-600 hover:bg-blue-500 disabled:bg-blue-800 text-white px-4 py-2 rounded-md text-sm font-medium transition-all shadow-lg shadow-blue-900/20 outline-none focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
           >
             {isUploading ? <Loader2 className="w-4 h-4 animate-spin" /> : <UploadCloud className="w-4 h-4" />}
             <span className="hidden sm:inline">{isUploading ? 'Analyzing...' : 'Upload Data'}</span>
@@ -142,7 +142,7 @@ export default function App() {
             </p>
             <button 
               onClick={handleUploadClick}
-              className="flex items-center gap-2 bg-white text-slate-900 hover:bg-slate-200 px-6 py-3 rounded-lg font-semibold transition-colors"
+              className="flex items-center gap-2 bg-white text-slate-900 hover:bg-slate-200 px-6 py-3 rounded-lg font-semibold transition-all hover:shadow-xl hover:shadow-white/10 hover:-translate-y-1 outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900"
             >
               <FileSpreadsheet className="w-5 h-5" />
               Upload CSV
@@ -162,28 +162,28 @@ export default function App() {
           <>
             {/* KPI Dashboard */}
             <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-              <div className="p-5 rounded-xl border border-slate-800 bg-slate-900 flex flex-col gap-3">
+              <div className="p-6 rounded-xl border border-slate-800 bg-slate-900 flex flex-col gap-3 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-slate-950/50 hover:border-slate-700">
                 <div className="flex items-center justify-between text-slate-400">
                   <span className="text-sm font-medium">Total Revenue</span>
                   <Activity className="w-4 h-4 text-blue-400" />
                 </div>
                 <div className="text-2xl font-bold text-white">{formatCurrency(dashboardData.kpis.total_revenue)}</div>
               </div>
-              <div className="p-5 rounded-xl border border-slate-800 bg-slate-900 flex flex-col gap-3">
+              <div className="p-6 rounded-xl border border-slate-800 bg-slate-900 flex flex-col gap-3 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-slate-950/50 hover:border-slate-700">
                 <div className="flex items-center justify-between text-slate-400">
                   <span className="text-sm font-medium">Orders / Rows</span>
                   <FileSpreadsheet className="w-4 h-4 text-indigo-400" />
                 </div>
                 <div className="text-2xl font-bold text-white">{formatNumber(dashboardData.kpis.total_orders)}</div>
               </div>
-              <div className="p-5 rounded-xl border border-slate-800 bg-slate-900 flex flex-col gap-3">
+              <div className="p-6 rounded-xl border border-slate-800 bg-slate-900 flex flex-col gap-3 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-slate-950/50 hover:border-slate-700">
                 <div className="flex items-center justify-between text-slate-400">
                   <span className="text-sm font-medium">Avg Order Value</span>
                   <Zap className="w-4 h-4 text-amber-400" />
                 </div>
                 <div className="text-2xl font-bold text-white">{formatCurrency(dashboardData.kpis.average_order_value)}</div>
               </div>
-              <div className="p-5 rounded-xl border border-slate-800 bg-slate-900 flex flex-col gap-3">
+              <div className="p-6 rounded-xl border border-slate-800 bg-slate-900 flex flex-col gap-3 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-slate-950/50 hover:border-slate-700">
                 <div className="flex items-center justify-between text-slate-400">
                   <span className="text-sm font-medium">Growth</span>
                   {dashboardData.kpis.growth_percentage >= 0 ? (
@@ -200,7 +200,7 @@ export default function App() {
 
             {/* Charts */}
             <section className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              <div className="p-6 rounded-xl border border-slate-800 bg-slate-900">
+              <div className="p-6 rounded-xl border border-slate-800 bg-slate-900 transition-all duration-300 hover:shadow-xl hover:shadow-slate-950/50 hover:border-slate-700">
                 <h3 className="text-lg font-semibold text-white mb-6">Revenue Trend</h3>
                 <div className="h-72 w-full">
                   <ResponsiveContainer width="100%" height="100%">
@@ -218,7 +218,7 @@ export default function App() {
                   </ResponsiveContainer>
                 </div>
               </div>
-              <div className="p-6 rounded-xl border border-slate-800 bg-slate-900">
+              <div className="p-6 rounded-xl border border-slate-800 bg-slate-900 transition-all duration-300 hover:shadow-xl hover:shadow-slate-950/50 hover:border-slate-700">
                 <h3 className="text-lg font-semibold text-white mb-6">Sales by Category</h3>
                 <div className="h-72 w-full">
                   <ResponsiveContainer width="100%" height="100%">
@@ -293,7 +293,7 @@ export default function App() {
 
                         <button 
                           onClick={() => setExpandedInsightIndex(isExpanded ? null : idx)}
-                          className={`mt-auto flex items-center gap-1 text-sm font-medium ${textColor} hover:opacity-80 w-fit pt-2`}
+                          className={`mt-auto flex items-center gap-1 text-sm font-medium ${textColor} hover:opacity-80 w-fit pt-2 outline-none focus-visible:ring-2 focus-visible:ring-slate-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 rounded-sm transition-all`}
                         >
                           {isExpanded ? 'Hide Evidence' : 'View Evidence'} 
                           {isExpanded ? <ChevronDown className="w-4 h-4" /> : <ChevronRight className="w-4 h-4" />}
@@ -307,7 +307,7 @@ export default function App() {
 
             {/* Assistant and Simulator */}
             <section className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              <div className="p-6 rounded-xl border border-slate-800 bg-slate-900 flex flex-col h-[500px]">
+              <div className="p-6 rounded-xl border border-slate-800 bg-slate-900 flex flex-col h-[500px] transition-all duration-300 hover:shadow-xl hover:shadow-slate-950/50 hover:border-slate-700">
                 <div className="flex items-center gap-2 mb-6">
                   <MessageSquare className="w-5 h-5 text-blue-400" />
                   <h3 className="text-lg font-semibold text-white">AI Business Assistant</h3>
@@ -419,7 +419,7 @@ export default function App() {
                 </div>
               </div>
 
-              <div className="p-6 rounded-xl border border-slate-800 bg-slate-900 flex flex-col">
+              <div className="p-6 rounded-xl border border-slate-800 bg-slate-900 flex flex-col transition-all duration-300 hover:shadow-xl hover:shadow-slate-950/50 hover:border-slate-700">
                 <div className="flex items-center gap-2 mb-6">
                   <Activity className="w-5 h-5 text-indigo-400" />
                   <h3 className="text-lg font-semibold text-white">WHAT-IF SIMULATOR</h3>
@@ -476,7 +476,7 @@ export default function App() {
             </section>
 
             {/* Recent Analysis */}
-            <section className="p-6 rounded-xl border border-slate-800 bg-slate-900 overflow-x-auto">
+            <section className="p-6 rounded-xl border border-slate-800 bg-slate-900 overflow-x-auto transition-all duration-300 hover:shadow-xl hover:shadow-slate-950/50 hover:border-slate-700">
               <h3 className="text-lg font-semibold text-white mb-6">Recent Analysis</h3>
               <table className="w-full text-left border-collapse min-w-[600px]">
                 <thead>
