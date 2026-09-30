@@ -422,25 +422,30 @@ export default function App() {
               <div className="p-6 rounded-xl border border-slate-800 bg-slate-900 flex flex-col">
                 <div className="flex items-center gap-2 mb-6">
                   <Activity className="w-5 h-5 text-indigo-400" />
-                  <h3 className="text-lg font-semibold text-white">What-If Simulator</h3>
+                  <h3 className="text-lg font-semibold text-white">WHAT-IF SIMULATOR</h3>
                 </div>
-                <p className="text-slate-400 text-sm mb-8">Simulate how changes in key metrics affect overall performance.</p>
+                <p className="text-slate-400 text-sm mb-6">Simulate how changes in key metrics affect overall performance.</p>
 
-                <div className="mb-8">
+                <div className="mb-6">
                   <div className="flex justify-between items-center mb-4">
-                    <label className="text-sm font-medium text-slate-300">Sales Increase</label>
-                    <span className="px-3 py-1 bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 rounded-md font-semibold text-sm">
-                      +{salesIncrease}%
+                    <label className="text-sm font-medium text-slate-300">Sales Change</label>
+                    <span className={`px-3 py-1 bg-indigo-500/10 ${salesIncrease >= 0 ? 'text-emerald-400' : 'text-rose-400'} border border-indigo-500/20 rounded-md font-semibold text-sm`}>
+                      {salesIncrease > 0 ? '+' : ''}{salesIncrease}%
                     </span>
                   </div>
                   <input 
                     type="range" 
-                    min="0" 
-                    max="50" 
+                    min="-50" 
+                    max="100" 
                     value={salesIncrease} 
                     onChange={(e) => setSalesIncrease(Number(e.target.value))}
                     className="w-full accent-indigo-500 h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer"
                   />
+                  <div className="flex justify-between text-xs text-slate-500 mt-2">
+                    <span>-50%</span>
+                    <span>0%</span>
+                    <span>+100%</span>
+                  </div>
                 </div>
 
                 <div className="mt-auto space-y-4">
@@ -454,9 +459,18 @@ export default function App() {
                     <span className="text-indigo-400 font-bold text-lg">{formatCurrency(projectedRevenue)}</span>
                   </div>
                   <div className="flex justify-between items-center p-3">
-                    <span className="text-slate-500 text-sm">Estimated Increase</span>
-                    <span className="text-emerald-400 font-semibold text-sm">+{formatCurrency(estimatedIncrease)}</span>
+                    <span className="text-slate-500 text-sm">Estimated Change</span>
+                    <span className={`${estimatedIncrease >= 0 ? 'text-emerald-400' : 'text-rose-400'} font-semibold text-sm`}>
+                      {estimatedIncrease > 0 ? '+' : ''}{formatCurrency(estimatedIncrease)}
+                    </span>
                   </div>
+                </div>
+
+                <div className="mt-6 p-3 rounded bg-slate-800/50 border border-slate-700/50">
+                  <p className="text-xs text-slate-400 leading-relaxed">
+                    <span className="font-semibold text-slate-300">Note: </span>
+                    Projection is a mathematical scenario based on the current analyzed revenue. It is not a forecast.
+                  </p>
                 </div>
               </div>
             </section>
