@@ -42,7 +42,7 @@ async def analyze_dataset(file: UploadFile = File(...)):
     regions = analyze_region(df, mapping)
     
     # 6. Generate Insights
-    insights = generate_insights(kpis, categories, regions, products)
+    insights = generate_insights(kpis, categories, regions, products, quality)
     
     # 7. Generate Preview
     # Convert NaNs to None for JSON serialization

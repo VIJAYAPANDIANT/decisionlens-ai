@@ -2,11 +2,37 @@ import React, { useState } from 'react';
 import { MessageSquare, ArrowRight, Search, Loader2 } from 'lucide-react';
 import { askAI } from '../services/api';
 
-export default function AIAssistant() {
+export default function AIAssistant({ analysis }) {
   const [question, setQuestion] = useState('');
   const [response, setResponse] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+
+  // Flatten verified numeric values for basic verification
+  const verifiedValues = React.useMemo(() => {
+    if (!analysis) return [];
+    const vals = [];
+    const add = (v) => {
+      if (typeof v === 'number') vals.push(v);
+      if (typeof v === 'string' && !isNaN(parseFloat(v.replace(/[$,%]/g, '')))) {
+        vals.push(parseFloat(v.replace(/[$,%]/g, '')));
+      }
+    };
+    add(analysis.kpis.total_revenue);
+    add(analysis.kpis.revenue_growth);
+    analysis.category_performance?.forEach(c => { add(c.revenue); add(c.percentage); });
+    analysis.regional_performance?.forEach(r => { add(r.revenue); add(r.percentage); });
+    analysis.product_performance?.forEach(p => { add(p.revenue); });
+    return vals;
+  }, [analysis]);
+
+  const verifyEvidence = (val) => {
+    if (typeof val !== 'string') return true;
+    const num = parseFloat(val.replace(/[$,%]/g, ''));
+    if (isNaN(num)) return true; // Can't verify text strings easily
+    // If it's a number, check if it's somewhat close to a verified value (handle rounding differences)
+    return verifiedValues.some(v => Math.abs(v - num) < (Math.abs(num) * 0.05) || Math.abs(v - num) < 1);
+  };
 
   const handleAsk = async (q = question) => {
     if (!q.trim()) return;
@@ -73,14 +99,22 @@ export default function AIAssistant() {
                 
                 {response.evidence && response.evidence.length > 0 && (
                   <div className="pt-3 border-t border-slate-700">
-                    <h4 className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Evidence</h4>
+                    <h4 className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Verified Evidence</h4>
                     <ul className="space-y-2">
-                      {response.evidence.map((ev, i) => (
-                        <li key={i} className="text-sm text-slate-300 flex items-center justify-between bg-slate-900/50 p-2 rounded">
-                          <span>{ev.label}</span>
-                          <span className="font-bold text-white">{ev.value}</span>
-                        </li>
-                      ))}
+                      {response.evidence.map((ev, i) => {
+                        const isVerified = verifyEvidence(ev.value);
+                        return (
+                          <li key={i} className={`text-sm flex items-center justify-between p-2 rounded ${isVerified ? 'bg-slate-900/50 text-slate-300' : 'bg-rose-900/20 text-rose-300 border border-rose-900/50'}`}>
+                            <span>{ev.label}</span>
+                            <div className="flex items-center gap-2">
+                              <span className={`font-bold ${isVerified ? 'text-white' : 'text-rose-400 line-through opacity-70'}`}>
+                                {ev.value}
+                              </span>
+                              {!isVerified && <span className="text-[10px] uppercase text-rose-400 font-bold ml-1 border border-rose-500/30 px-1 py-0.5 rounded">Unverified</span>}
+                            </div>
+                          </li>
+                        );
+                      })}
                     </ul>
                   </div>
                 )}

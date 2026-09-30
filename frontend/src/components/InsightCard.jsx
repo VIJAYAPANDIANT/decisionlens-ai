@@ -1,61 +1,68 @@
-import React, { useState } from 'react';
-import { ChevronDown, ChevronRight, AlertTriangle, TrendingUp } from 'lucide-react';
+import React from 'react';
+import { CheckCircle2, AlertTriangle, Info, ArrowRight, Activity } from 'lucide-react';
 
-export default function InsightCard({ insight }) {
-  const [isExpanded, setIsExpanded] = useState(false);
-  
-  const isCritical = insight.impact === 'High';
-  const isWarning = insight.impact === 'Medium';
-  
-  const borderColor = isCritical ? 'border-rose-900/30' : isWarning ? 'border-amber-900/30' : 'border-emerald-900/30';
-  const bgColor = isCritical ? 'bg-rose-950/10' : isWarning ? 'bg-amber-950/10' : 'bg-emerald-950/10';
-  const barColor = isCritical ? 'bg-rose-500' : isWarning ? 'bg-amber-500' : 'bg-emerald-500';
-  const textColor = isCritical ? 'text-rose-400' : isWarning ? 'text-amber-400' : 'text-emerald-400';
-  const hoverBorder = isCritical ? 'hover:border-rose-800/50' : isWarning ? 'hover:border-amber-800/50' : 'hover:border-emerald-800/50';
+export default function InsightCard({ insight, onViewEvidence }) {
+  const getSeverityStyles = (sev) => {
+    switch (sev) {
+      case 'positive': return 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20';
+      case 'warning': return 'bg-amber-500/10 text-amber-400 border-amber-500/20';
+      case 'risk': return 'bg-rose-500/10 text-rose-400 border-rose-500/20';
+      case 'neutral':
+      default: return 'bg-blue-500/10 text-blue-400 border-blue-500/20';
+    }
+  };
+
+  const getSeverityIcon = (sev) => {
+    switch (sev) {
+      case 'positive': return <CheckCircle2 className="w-4 h-4" />;
+      case 'warning': return <AlertTriangle className="w-4 h-4" />;
+      case 'risk': return <Activity className="w-4 h-4" />;
+      default: return <Info className="w-4 h-4" />;
+    }
+  };
 
   return (
-    <div className={`p-6 rounded-xl border ${borderColor} ${bgColor} flex flex-col gap-3 relative overflow-hidden group transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-slate-950/50 ${hoverBorder}`}>
-      <div className={`absolute top-0 left-0 w-1 h-full ${barColor}`}></div>
-      <div className={`flex items-center gap-2 ${textColor}`}>
-        {isCritical || isWarning ? <AlertTriangle className="w-4 h-4" /> : <TrendingUp className="w-4 h-4" />}
-        <span className="text-xs font-bold uppercase tracking-wider">{insight.impact} IMPACT</span>
-      </div>
-      <h4 className="text-white font-semibold text-lg">{insight.title}</h4>
-      <p className="text-slate-400 text-sm mb-2">{insight.description}</p>
+    <div className="p-5 rounded-xl border border-slate-800 bg-slate-900 flex flex-col transition-all duration-300 hover:shadow-xl hover:shadow-slate-950/50 hover:border-slate-700 h-full group">
       
-      {isExpanded && (
-        <div className="mt-2 space-y-4 animate-in fade-in slide-in-from-top-2">
-          <div className="space-y-2">
-            <h5 className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Evidence</h5>
-            <div className="bg-slate-900/50 rounded-lg p-3 space-y-3">
-              {insight.evidence.map((ev, eIdx) => (
-                <div key={eIdx} className="flex flex-col gap-1">
-                  <div className="flex justify-between items-center text-sm">
-                    <span className="text-slate-300">{ev.label}</span>
-                    <span className="text-white font-bold">{ev.value}</span>
-                  </div>
-                </div>
-              ))}
-              <div className="pt-2 border-t border-slate-800/50">
-                <span className="text-[10px] text-slate-500 uppercase">Source: {insight.source}</span>
-              </div>
-            </div>
-          </div>
-          
-          <div className="space-y-2">
-            <h5 className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Recommendation</h5>
-            <p className="text-sm text-slate-300">{insight.recommendation}</p>
-          </div>
-        </div>
-      )}
+      <div className="flex items-start justify-between mb-4">
+        <span className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold border ${getSeverityStyles(insight.severity)}`}>
+          {getSeverityIcon(insight.severity)}
+          <span className="capitalize">{insight.severity}</span>
+        </span>
+        <span className="text-[10px] font-semibold tracking-wider uppercase px-2 py-0.5 rounded text-indigo-400 border border-indigo-500/20 bg-indigo-500/10">
+          Verified from dataset
+        </span>
+      </div>
 
-      <button 
-        onClick={() => setIsExpanded(!isExpanded)}
-        className={`mt-auto flex items-center gap-1 text-sm font-medium ${textColor} hover:opacity-80 w-fit pt-2 outline-none focus-visible:ring-2 focus-visible:ring-slate-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 rounded-sm transition-all`}
-      >
-        {isExpanded ? 'Hide Evidence' : 'View Evidence'} 
-        {isExpanded ? <ChevronDown className="w-4 h-4" /> : <ChevronRight className="w-4 h-4" />}
-      </button>
+      <h3 className="text-base font-bold text-white mb-2 line-clamp-2">
+        {insight.title}
+      </h3>
+      
+      <p className="text-slate-400 text-sm mb-6 line-clamp-3">
+        {insight.description}
+      </p>
+
+      <div className="mt-auto pt-4 border-t border-slate-800/50 space-y-4">
+        
+        {/* Compact Evidence Preview */}
+        <div className="grid grid-cols-2 gap-2">
+          {insight.evidence.slice(0, 2).map((ev, i) => (
+            <div key={i} className="flex flex-col">
+              <span className="text-[10px] text-slate-500 uppercase truncate">{ev.label}</span>
+              <span className="text-sm font-bold text-slate-200 truncate">{ev.value}</span>
+            </div>
+          ))}
+        </div>
+
+        <button 
+          onClick={() => onViewEvidence(insight)}
+          className="w-full flex items-center justify-between px-3 py-2 bg-slate-950 hover:bg-slate-800 rounded-lg text-sm text-blue-400 hover:text-blue-300 font-medium transition-colors outline-none focus-visible:ring-2 focus-visible:ring-blue-500 border border-transparent hover:border-slate-700"
+        >
+          View Evidence
+          <ArrowRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" />
+        </button>
+      </div>
+      
     </div>
   );
 }

@@ -26,15 +26,13 @@ class KPIs(BaseModel):
     average_order_value: float
     revenue_growth: Optional[float] = None
 
-class InsightEvidence(BaseModel):
-    category: Optional[str] = None
-    region: Optional[str] = None
-    product: Optional[str] = None
-    revenue: Optional[float] = None
-    percentage: Optional[float] = None
-    current_revenue: Optional[float] = None
-    previous_revenue: Optional[float] = None
-    change_percentage: Optional[float] = None
+class InsightEvidenceItem(BaseModel):
+    label: str
+    value: str
+
+class InsightSource(BaseModel):
+    analysis: str
+    field: str
 
 class Insight(BaseModel):
     id: str
@@ -42,7 +40,10 @@ class Insight(BaseModel):
     title: str
     description: str
     severity: str
-    evidence: InsightEvidence
+    confidence: str
+    evidence: List[InsightEvidenceItem]
+    source: InsightSource
+    recommendation: str
 
 class AnalysisResponse(BaseModel):
     success: bool

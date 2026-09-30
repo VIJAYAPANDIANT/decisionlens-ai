@@ -12,6 +12,7 @@ import DataTable from './components/DataTable';
 import EmptyState from './components/EmptyState';
 import LoadingState from './components/LoadingState';
 import ErrorState from './components/ErrorState';
+import InsightsPage from './components/InsightsPage';
 import { uploadDataset } from './services/api';
 
 export default function App() {
@@ -89,7 +90,7 @@ export default function App() {
           )}
 
           {hasData && !isLoading && !error && (
-            <div className="space-y-8 animate-in fade-in duration-500">
+            <div className="space-y-8 animate-in fade-in duration-500 pb-12">
               
               {/* Dataset Quality Info (Small top bar) */}
               <div className="flex items-center gap-6 px-4 py-3 bg-slate-900 border border-slate-800 rounded-lg text-sm text-slate-400">
@@ -107,33 +108,41 @@ export default function App() {
                 </span>
               </div>
 
-              {/* KPIs */}
-              <KPISection kpis={analysis.kpis} />
+              {activeTab === 'dashboard' && (
+                <>
+                  {/* KPIs */}
+                  <KPISection kpis={analysis.kpis} />
 
-              {/* Charts */}
-              <section className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <RevenueChart data={analysis.revenue_trend} />
-                <CategoryChart data={analysis.category_performance} />
-              </section>
-              
-              {/* Regional & Table */}
-              <section className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <div className="lg:col-span-1">
-                  <RegionalPerformance data={analysis.regional_performance} />
-                </div>
-                <div className="lg:col-span-2">
-                  <DataTable data={analysis.preview} mapping={analysis.column_mapping} />
-                </div>
-              </section>
+                  {/* Charts */}
+                  <section className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <RevenueChart data={analysis.revenue_trend} />
+                    <CategoryChart data={analysis.category_performance} />
+                  </section>
+                  
+                  {/* Regional & Table */}
+                  <section className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <div className="lg:col-span-1">
+                      <RegionalPerformance data={analysis.regional_performance} />
+                    </div>
+                    <div className="lg:col-span-2">
+                      <DataTable data={analysis.preview} mapping={analysis.column_mapping} />
+                    </div>
+                  </section>
 
-              {/* AI Insights */}
-              <AIInsightSection insights={analysis.insights} />
+                  {/* AI Insights (Top 3) */}
+                  <AIInsightSection insights={analysis.insights} onViewAll={() => setActiveTab('insights')} />
 
-              {/* Assistant and Simulator */}
-              <section className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <AIAssistant />
-                <WhatIfSimulator currentRevenue={analysis.kpis.total_revenue} />
-              </section>
+                  {/* Assistant and Simulator */}
+                  <section className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <AIAssistant analysis={analysis} />
+                    <WhatIfSimulator currentRevenue={analysis.kpis.total_revenue} />
+                  </section>
+                </>
+              )}
+
+              {activeTab === 'insights' && (
+                <InsightsPage insights={analysis.insights} onUpload={handleUploadClick} />
+              )}
 
             </div>
           )}
