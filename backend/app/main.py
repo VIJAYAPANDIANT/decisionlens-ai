@@ -1,9 +1,13 @@
 from fastapi import FastAPI, UploadFile, File, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 import pandas as pd
-import numpy as np
 import io
 import math
+from dotenv import load_dotenv
+import os
+from app.services.gemini_service import ask_business_question, AskRequest
+
+load_dotenv()
 
 app = FastAPI(title="DecisionLens AI API")
 
@@ -163,3 +167,10 @@ async def analyze_csv(file: UploadFile = File(...)):
     }
     
     return clean_floats(response_data)
+
+@app.post("/api/ask")
+def ask_gemini(request: AskRequest):
+    try:
+        return ask_business_question(request)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))

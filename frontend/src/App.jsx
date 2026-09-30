@@ -11,6 +11,12 @@ export default function App() {
   // Dashboard State
   const [dashboardData, setDashboardData] = useState(null);
   
+  // AI Assistant State
+  const [questionText, setQuestionText] = useState("");
+  const [isAsking, setIsAsking] = useState(false);
+  const [aiResponse, setAiResponse] = useState(null);
+  const [askError, setAskError] = useState(null);
+
   const fileInputRef = useRef(null);
 
   const handleUploadClick = () => {
@@ -42,8 +48,28 @@ export default function App() {
       setUploadError(err.response?.data?.detail || 'Failed to analyze file. Ensure backend is running.');
     } finally {
       setIsUploading(false);
-      // Reset input
       if (fileInputRef.current) fileInputRef.current.value = '';
+    }
+  };
+
+  const handleAskQuestion = async (q = questionText) => {
+    if (!q || !dashboardData) return;
+    setIsAsking(true);
+    setAskError(null);
+    setAiResponse(null);
+    setQuestionText(q);
+
+    try {
+      const response = await axios.post('http://localhost:8000/api/ask', {
+        question: q,
+        analysis: dashboardData
+      });
+      setAiResponse(response.data);
+    } catch (err) {
+      console.error(err);
+      setAskError(err.response?.data?.detail || 'Failed to get answer from AI.');
+    } finally {
+      setIsAsking(false);
     }
   };
 
@@ -248,34 +274,113 @@ export default function App() {
 
             {/* Assistant and Simulator */}
             <section className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              <div className="p-6 rounded-xl border border-slate-800 bg-slate-900 flex flex-col h-[400px]">
+              <div className="p-6 rounded-xl border border-slate-800 bg-slate-900 flex flex-col h-[500px]">
                 <div className="flex items-center gap-2 mb-6">
                   <MessageSquare className="w-5 h-5 text-blue-400" />
                   <h3 className="text-lg font-semibold text-white">AI Business Assistant</h3>
                 </div>
                 
-                <div className="flex-1 overflow-y-auto mb-4 text-center flex flex-col justify-center items-center opacity-70">
-                  <Search className="w-10 h-10 text-slate-600 mb-3" />
-                  <p className="text-slate-400 text-sm">Ask your business data anything...</p>
+                <div className="flex-1 overflow-y-auto mb-4 pr-2 space-y-4 custom-scrollbar">
+                  {!aiResponse && !isAsking && (
+                    <div className="text-center flex flex-col justify-center items-center opacity-70 h-full">
+                      <Search className="w-10 h-10 text-slate-600 mb-3" />
+                      <p className="text-slate-400 text-sm">Ask your business data anything...</p>
+                    </div>
+                  )}
+
+                  {isAsking && (
+                    <div className="flex flex-col items-center justify-center h-full opacity-70">
+                      <Loader2 className="w-8 h-8 text-blue-500 animate-spin mb-3" />
+                      <p className="text-sm text-slate-400">Gemini is analyzing...</p>
+                    </div>
+                  )}
+
+                  {askError && (
+                    <div className="p-4 rounded-lg bg-rose-950/50 border border-rose-900/50 text-rose-400 text-sm">
+                      {askError}
+                    </div>
+                  )}
+
+                  {aiResponse && (
+                    <div className="space-y-4 animate-in fade-in slide-in-from-bottom-2">
+                      <div className="p-4 rounded-lg bg-slate-950 border border-slate-800">
+                        <p className="text-white text-sm leading-relaxed">{aiResponse.answer}</p>
+                      </div>
+                      
+                      {aiResponse.evidence?.length > 0 && (
+                        <div>
+                          <h4 className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Evidence</h4>
+                          <ul className="space-y-1">
+                            {aiResponse.evidence.map((ev, i) => (
+                              <li key={i} className="text-sm text-slate-300 flex items-start gap-2">
+                                <span className="text-blue-500 mt-1">•</span> {ev}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+                      
+                      {aiResponse.recommendations?.length > 0 && (
+                        <div>
+                          <h4 className="text-xs font-semibold text-emerald-400 uppercase tracking-wider mb-2">Recommendations</h4>
+                          <ul className="space-y-1">
+                            {aiResponse.recommendations.map((rec, i) => (
+                              <li key={i} className="text-sm text-slate-300 flex items-start gap-2">
+                                <span className="text-emerald-500 mt-1">•</span> {rec}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+
+                      {aiResponse.limitations?.length > 0 && (
+                        <div>
+                          <h4 className="text-xs font-semibold text-amber-400 uppercase tracking-wider mb-2">Limitations</h4>
+                          <ul className="space-y-1">
+                            {aiResponse.limitations.map((lim, i) => (
+                              <li key={i} className="text-sm text-slate-300 flex items-start gap-2">
+                                <span className="text-amber-500 mt-1">•</span> {lim}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+                    </div>
+                  )}
                 </div>
 
-                <div className="space-y-2 mb-4">
-                  <button className="w-full text-left px-4 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-sm text-slate-300 transition-colors border border-slate-700">
-                    "Why did revenue decline?"
-                  </button>
-                  <button className="w-full text-left px-4 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-sm text-slate-300 transition-colors border border-slate-700">
-                    "Which product is performing best?"
-                  </button>
-                </div>
+                {!aiResponse && !isAsking && (
+                  <div className="space-y-2 mb-4">
+                    <button onClick={() => handleAskQuestion("Why did revenue decline?")} className="w-full text-left px-4 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-sm text-slate-300 transition-colors border border-slate-700">
+                      "Why did revenue decline?"
+                    </button>
+                    <button onClick={() => handleAskQuestion("Which category performed best?")} className="w-full text-left px-4 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-sm text-slate-300 transition-colors border border-slate-700">
+                      "Which category performed best?"
+                    </button>
+                    <button onClick={() => handleAskQuestion("What are the biggest business risks?")} className="w-full text-left px-4 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-sm text-slate-300 transition-colors border border-slate-700">
+                      "What are the biggest business risks?"
+                    </button>
+                    <button onClick={() => handleAskQuestion("What should we investigate next?")} className="w-full text-left px-4 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-sm text-slate-300 transition-colors border border-slate-700">
+                      "What should we investigate next?"
+                    </button>
+                  </div>
+                )}
 
-                <div className="relative">
+                <div className="relative mt-auto">
                   <input 
                     type="text" 
-                    placeholder="Type your question (Coming in next phase)..." 
-                    disabled
-                    className="w-full bg-slate-950 border border-slate-700 rounded-lg pl-4 pr-10 py-3 text-sm text-white focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all opacity-50"
+                    value={questionText}
+                    onChange={(e) => setQuestionText(e.target.value)}
+                    onKeyDown={(e) => e.key === 'Enter' && handleAskQuestion()}
+                    placeholder="Ask about your data..." 
+                    disabled={isAsking}
+                    className="w-full bg-slate-950 border border-slate-700 rounded-lg pl-4 pr-10 py-3 text-sm text-white focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all disabled:opacity-50"
                   />
-                  <button disabled className="absolute right-2 top-1/2 -translate-y-1/2 p-1.5 bg-blue-600/50 rounded-md text-white">
+                  <button 
+                    onClick={() => handleAskQuestion()} 
+                    disabled={isAsking || !questionText} 
+                    className="absolute right-2 top-1/2 -translate-y-1/2 p-1.5 bg-blue-600 hover:bg-blue-500 disabled:bg-slate-700 rounded-md text-white transition-colors"
+                  >
                     <ArrowRight className="w-4 h-4" />
                   </button>
                 </div>
