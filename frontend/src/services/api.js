@@ -22,9 +22,15 @@ export const uploadDataset = async (file) => {
 };
 
 export const askAI = async (question) => {
-  // TODO: Implement actual backend call
-  console.log('Mock ask AI:', question);
-  return { success: true };
+  try {
+    const response = await api.post('/api/ask', { question });
+    return response.data;
+  } catch (error) {
+    if (error.response && error.response.data && error.response.data.error) {
+      throw new Error(error.response.data.error.message || "Failed to get AI answer.");
+    }
+    throw new Error("Unable to connect to the analysis service. Please try again.");
+  }
 };
 
 export const runScenario = async (params) => {

@@ -12,6 +12,7 @@ from ..utils.errors import raise_invalid_csv
 import numpy as np
 
 router = APIRouter()
+from .ask import update_session_context
 
 @router.post("/api/analyze")
 async def analyze_dataset(file: UploadFile = File(...)):
@@ -54,7 +55,7 @@ async def analyze_dataset(file: UploadFile = File(...)):
         
     preview = preview_df.to_dict(orient='records')
     
-    return {
+    response_data = {
         "success": True,
         "dataset": {
             "filename": file.filename,
@@ -72,3 +73,7 @@ async def analyze_dataset(file: UploadFile = File(...)):
         "insights": insights,
         "preview": preview
     }
+    
+    update_session_context(response_data)
+    
+    return response_data
