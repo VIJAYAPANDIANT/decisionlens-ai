@@ -7,15 +7,18 @@ const api = axios.create({
 });
 
 export const uploadDataset = async (file) => {
-  // TODO: Implement actual backend call
-  console.log('Mock upload dataset');
-  return { success: true };
-};
-
-export const analyzeDataset = async () => {
-  // TODO: Implement actual backend call
-  console.log('Mock analyze dataset');
-  return { success: true };
+  const formData = new FormData();
+  formData.append("file", file);
+  
+  try {
+    const response = await api.post('/api/analyze', formData);
+    return response.data;
+  } catch (error) {
+    if (error.response && error.response.data && error.response.data.detail) {
+      throw new Error(error.response.data.detail.message || "Failed to analyze dataset.");
+    }
+    throw new Error("Unable to connect to the analysis service. Please try again.");
+  }
 };
 
 export const askAI = async (question) => {

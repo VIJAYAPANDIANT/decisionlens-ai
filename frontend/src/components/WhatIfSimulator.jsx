@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import { Activity } from 'lucide-react';
 
-export default function WhatIfSimulator() {
+export default function WhatIfSimulator({ currentRevenue }) {
   const [salesIncrease, setSalesIncrease] = useState(10);
   
-  const currentRevenue = 124580;
   const projectedRevenue = currentRevenue * (1 + salesIncrease / 100);
   const estimatedChange = projectedRevenue - currentRevenue;
 
