@@ -106,32 +106,62 @@ async def analyze_csv(file: UploadFile = File(...)):
         top_products = [{"product": str(row[prod_col]), "sales": float(row[rev_col])} for _, row in prod_df.iterrows()]
         
     insights = []
-    if growth_percentage < 0:
-        insights.append({
-            "severity": "critical",
-            "title": "Revenue Decline",
-            "explanation": f"Revenue decreased by {abs(growth_percentage):.1f}% in the most recent period."
-        })
-    elif growth_percentage > 0:
-        insights.append({
-            "severity": "success",
-            "title": "Revenue Growth",
-            "explanation": f"Revenue grew by {growth_percentage:.1f}% in the most recent period."
-        })
+    
+    # 1. Revenue Trend Insight
+    if len(revenue_trend) >= 2:
+        last_item = revenue_trend[-1]
+        prev_item = revenue_trend[-2]
         
+        if growth_percentage < 0:
+            insights.append({
+                "severity": "high",
+                "title": "Revenue Decline",
+                "description": f"Revenue decreased by {abs(growth_percentage):.1f}% in the most recent period.",
+                "evidence": [
+                    {"label": f"Previous Revenue ({prev_item['name']})", "value": f"₹{prev_item['revenue']:,.0f}", "source": "Calculated from uploaded dataset (Pandas aggregation)"},
+                    {"label": f"Current Revenue ({last_item['name']})", "value": f"₹{last_item['revenue']:,.0f}", "source": "Calculated from uploaded dataset (Pandas aggregation)"},
+                    {"label": "Change", "value": f"{growth_percentage:.1f}%", "source": "Calculated metric"}
+                ],
+                "recommendation": "Investigate underperforming products and consider running promotional campaigns to stimulate sales."
+            })
+        elif growth_percentage > 0:
+            insights.append({
+                "severity": "low",
+                "title": "Revenue Growth",
+                "description": f"Revenue grew by {growth_percentage:.1f}% in the most recent period.",
+                "evidence": [
+                    {"label": f"Previous Revenue ({prev_item['name']})", "value": f"₹{prev_item['revenue']:,.0f}", "source": "Calculated from uploaded dataset (Pandas aggregation)"},
+                    {"label": f"Current Revenue ({last_item['name']})", "value": f"₹{last_item['revenue']:,.0f}", "source": "Calculated from uploaded dataset (Pandas aggregation)"},
+                    {"label": "Change", "value": f"+{growth_percentage:.1f}%", "source": "Calculated metric"}
+                ],
+                "recommendation": "Identify which channels drove this growth and allocate more budget to them."
+            })
+            
+    # 2. Data Quality Insight
     if missing_vals > 0:
         insights.append({
-            "severity": "warning",
+            "severity": "medium",
             "title": "Data Quality Issue",
-            "explanation": f"Found {missing_vals} missing values in the dataset which may affect analysis."
+            "description": "Found missing values in the dataset which may affect analysis accuracy.",
+            "evidence": [
+                {"label": "Total Missing Values", "value": str(missing_vals), "source": "Pandas isnull() detection"},
+                {"label": "Total Rows", "value": str(len(df)), "source": "Dataset row count"}
+            ],
+            "recommendation": "Review the source data and clean missing entries before finalizing reports."
         })
         
+    # 3. Top Category Insight
     if category_analysis:
         top_cat = category_analysis[0]
         insights.append({
-            "severity": "success",
+            "severity": "low",
             "title": "Top Performing Category",
-            "explanation": f"{top_cat['category']} generated the highest revenue."
+            "description": f"{top_cat['category']} generated the highest revenue.",
+            "evidence": [
+                {"label": "Category", "value": top_cat['category'], "source": "Pandas category grouping"},
+                {"label": "Revenue Generated", "value": f"₹{top_cat['sales']:,.0f}", "source": "Pandas sum aggregation"}
+            ],
+            "recommendation": "Ensure adequate inventory for this category and feature it prominently in marketing."
         })
 
     def clean_floats(obj):

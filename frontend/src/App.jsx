@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import axios from 'axios';
 import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
-import { UploadCloud, FileSpreadsheet, TrendingDown, TrendingUp, AlertTriangle, Lightbulb, MessageSquare, ArrowRight, Activity, Search, ChevronRight, Zap, Loader2 } from 'lucide-react';
+import { UploadCloud, FileSpreadsheet, TrendingDown, TrendingUp, AlertTriangle, Lightbulb, MessageSquare, ArrowRight, Activity, Search, ChevronRight, ChevronDown, Zap, Loader2 } from 'lucide-react';
 
 export default function App() {
   const [salesIncrease, setSalesIncrease] = useState(5);
@@ -16,6 +16,9 @@ export default function App() {
   const [isAsking, setIsAsking] = useState(false);
   const [aiResponse, setAiResponse] = useState(null);
   const [askError, setAskError] = useState(null);
+
+  // Insights State
+  const [expandedInsightIndex, setExpandedInsightIndex] = useState(null);
 
   const fileInputRef = useRef(null);
 
@@ -244,8 +247,9 @@ export default function App() {
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   {dashboardData.insights.map((insight, idx) => {
-                    const isCritical = insight.severity === 'critical';
-                    const isWarning = insight.severity === 'warning';
+                    const isCritical = insight.severity === 'high';
+                    const isWarning = insight.severity === 'medium';
+                    const isExpanded = expandedInsightIndex === idx;
                     
                     const borderColor = isCritical ? 'border-rose-900/30' : isWarning ? 'border-amber-900/30' : 'border-emerald-900/30';
                     const bgColor = isCritical ? 'bg-rose-950/10' : isWarning ? 'bg-amber-950/10' : 'bg-emerald-950/10';
@@ -261,9 +265,38 @@ export default function App() {
                           <span className="text-xs font-bold uppercase tracking-wider">{insight.severity}</span>
                         </div>
                         <h4 className="text-white font-semibold text-lg">{insight.title}</h4>
-                        <p className="text-slate-400 text-sm mb-2">{insight.explanation}</p>
-                        <button className={`mt-auto flex items-center gap-1 text-sm font-medium ${textColor} hover:opacity-80 w-fit`}>
-                          View Evidence <ChevronRight className="w-4 h-4" />
+                        <p className="text-slate-400 text-sm mb-2">{insight.description}</p>
+                        
+                        {isExpanded && (
+                          <div className="mt-2 space-y-4 animate-in fade-in slide-in-from-top-2">
+                            <div className="space-y-2">
+                              <h5 className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Evidence</h5>
+                              <div className="bg-slate-900/50 rounded-lg p-3 space-y-3">
+                                {insight.evidence.map((ev, eIdx) => (
+                                  <div key={eIdx} className="flex flex-col gap-1">
+                                    <div className="flex justify-between items-center text-sm">
+                                      <span className="text-slate-300">{ev.label}</span>
+                                      <span className="text-white font-bold">{ev.value}</span>
+                                    </div>
+                                    <span className="text-[10px] text-slate-500">Source: {ev.source}</span>
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                            
+                            <div className="space-y-2">
+                              <h5 className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Recommendation</h5>
+                              <p className="text-sm text-slate-300">{insight.recommendation}</p>
+                            </div>
+                          </div>
+                        )}
+
+                        <button 
+                          onClick={() => setExpandedInsightIndex(isExpanded ? null : idx)}
+                          className={`mt-auto flex items-center gap-1 text-sm font-medium ${textColor} hover:opacity-80 w-fit pt-2`}
+                        >
+                          {isExpanded ? 'Hide Evidence' : 'View Evidence'} 
+                          {isExpanded ? <ChevronDown className="w-4 h-4" /> : <ChevronRight className="w-4 h-4" />}
                         </button>
                       </div>
                     );
