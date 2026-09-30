@@ -1,5 +1,13 @@
-date,product_category,revenue,units_sold,region
-2026-01-01,Electronics,1500,5,North
-2026-01-02,Software,3000,10,South
-2026-01-03,Hardware,2000,8,East
-2026-01-04,Electronics,2500,7,West
+order_id,date,product_name,category,quantity,revenue,region,customer_id
+ORD001,2026-05-01,Laptop Pro X,Electronics,1,120000,North,CUST101
+ORD002,2026-05-05,Wireless Mouse,Electronics,5,10000,South,CUST102
+ORD003,2026-06-10,Enterprise ERP,Software,1,500000,West,CUST103
+ORD004,2026-06-15,Office Chair,Hardware,2,30000,East,CUST104
+ORD005,2026-07-02,Cloud Hosting,Services,1,80000,North,CUST105
+ORD006,2026-07-18,Mechanical Keyboard,Electronics,3,15000,South,CUST106
+ORD007,2026-08-11,CRM License,Software,1,450000,West,CUST107
+ORD008,2026-08-25,Standing Desk,Hardware,1,40000,East,CUST108
+ORD009,2026-09-05,IT Consulting,Services,1,150000,North,CUST109
+ORD010,2026-09-12,Smartphone Z,Electronics,2,160000,South,CUST110
+ORD011,2026-09-20,Laptop Pro X,Electronics,1,120000,West,CUST111
+ORD012,2026-09-28,Enterprise ERP,Software,1,500000,East,CUST112
