@@ -13,6 +13,7 @@ import EmptyState from './components/EmptyState';
 import LoadingState from './components/LoadingState';
 import ErrorState from './components/ErrorState';
 import InsightsPage from './components/InsightsPage';
+import WhatIfPage from './components/WhatIfPage';
 import { uploadDataset } from './services/api';
 
 export default function App() {
@@ -135,13 +136,17 @@ export default function App() {
                   {/* Assistant and Simulator */}
                   <section className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                     <AIAssistant analysis={analysis} />
-                    <WhatIfSimulator currentRevenue={analysis.kpis.total_revenue} />
+                    <WhatIfSimulator currentRevenue={analysis.kpis.total_revenue} onOpen={() => setActiveTab('what-if')} />
                   </section>
                 </>
               )}
 
               {activeTab === 'insights' && (
                 <InsightsPage insights={analysis.insights} onUpload={handleUploadClick} />
+              )}
+
+              {activeTab === 'what-if' && (
+                <WhatIfPage currentRevenue={analysis?.kpis?.total_revenue} onUpload={handleUploadClick} />
               )}
 
             </div>
