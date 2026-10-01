@@ -141,6 +141,27 @@ export default function LandingPage({ onEnterApp, onViewProcess }) {
           </button>
         </div>
       </div>
+
+      {/* Footer */}
+      <footer className="border-t border-slate-800/50 bg-[#020617] py-6 mt-12">
+        <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-6">
+          <div className="flex items-center gap-3">
+            <div className="w-6 h-6 rounded-md bg-indigo-600 flex items-center justify-center shadow-lg shadow-indigo-900/20">
+              <BarChart2 className="w-3.5 h-3.5 text-white" />
+            </div>
+            <span className="text-sm font-bold text-slate-200 tracking-tight">DecisionLens AI</span>
+            <span className="text-xs text-slate-500 ml-2">© 2026 All rights reserved.</span>
+          </div>
+          
+          <div className="flex flex-wrap justify-center items-center gap-4 md:gap-8 text-[11px] font-mono text-slate-500">
+            <span className="hover:text-slate-300 transition-colors cursor-default">React 18</span>
+            <span className="hover:text-slate-300 transition-colors cursor-default">FastAPI 0.110</span>
+            <span className="hover:text-slate-300 transition-colors cursor-default">Pandas 2.2</span>
+            <span className="hover:text-slate-300 transition-colors cursor-default">Gemini AI 1.5</span>
+          </div>
+        </div>
+      </footer>
+
     </div>
   );
 }
