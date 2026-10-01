@@ -16,11 +16,12 @@ import InsightsPage from './components/InsightsPage';
 import WhatIfPage from './components/WhatIfPage';
 import ComparePage from './components/ComparePage';
 import ProcessPage from './components/ProcessPage';
+import LandingPage from './components/LandingPage';
 import HowItWorksModal from './components/HowItWorksModal';
 import { uploadDataset } from './services/api';
 
 export default function App() {
-  const [activeTab, setActiveTab] = useState('dashboard');
+  const [activeTab, setActiveTab] = useState('landing');
   
   // Primary Dataset
   const [analysis, setAnalysis] = useState(null);
@@ -104,6 +105,15 @@ export default function App() {
 
   const hasData = analysis !== null;
 
+  if (activeTab === 'landing') {
+    return (
+      <LandingPage 
+        onEnterApp={() => setActiveTab('dashboard')} 
+        onViewProcess={() => setActiveTab('process')}
+      />
+    );
+  }
+
   return (
     <div className="min-h-screen bg-slate-950 text-slate-200 font-sans flex">
       {/* Hidden File Input */}
@@ -115,7 +125,6 @@ export default function App() {
         className="hidden"
       />
 
-      {/* Sidebar */}
       <Sidebar 
         activeTab={activeTab} 
         setActiveTab={(tab) => { setActiveTab(tab); setIsMobileMenuOpen(false); }} 
@@ -123,7 +132,6 @@ export default function App() {
         onClose={() => setIsMobileMenuOpen(false)}
       />
       
-      {/* Main Content Area */}
       <div className="flex-1 flex flex-col min-h-screen min-w-0">
         <Header 
           onUpload={handleUploadClick} 

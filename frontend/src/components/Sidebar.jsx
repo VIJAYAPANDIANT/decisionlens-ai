@@ -28,11 +28,14 @@ export default function Sidebar({ activeTab, setActiveTab, isOpen, onClose }) {
       `}>
         <div className="p-6 flex items-center justify-between">
           <div>
-            <div className="flex items-center gap-3 mb-1">
-              <div className="w-8 h-8 rounded-lg bg-indigo-600 flex items-center justify-center shadow-lg shadow-indigo-900/20">
+            <div 
+              className="flex items-center gap-3 mb-1 cursor-pointer group"
+              onClick={() => setActiveTab('landing')}
+            >
+              <div className="w-8 h-8 rounded-lg bg-indigo-600 flex items-center justify-center shadow-lg shadow-indigo-900/20 group-hover:bg-indigo-500 transition-colors">
                 <BarChart2 className="w-5 h-5 text-white" />
               </div>
-              <span className="text-xl font-bold text-white tracking-tight">DecisionLens AI</span>
+              <span className="text-xl font-bold text-white tracking-tight group-hover:text-indigo-400 transition-colors">DecisionLens AI</span>
             </div>
             <div className="text-xs font-medium text-slate-500 uppercase tracking-widest pl-11">Decision Intelligence</div>
           </div>
