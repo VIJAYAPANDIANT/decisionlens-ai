@@ -15,6 +15,7 @@ import ErrorState from './components/ErrorState';
 import InsightsPage from './components/InsightsPage';
 import WhatIfPage from './components/WhatIfPage';
 import ComparePage from './components/ComparePage';
+import ProcessPage from './components/ProcessPage';
 import HowItWorksModal from './components/HowItWorksModal';
 import { uploadDataset } from './services/api';
 
@@ -136,7 +137,7 @@ export default function App() {
             <ErrorState message={error} onRetry={() => setError(null)} />
           )}
 
-          {!hasData && !isLoading && !error && (
+          {!hasData && !isLoading && !error && activeTab !== 'process' && (
             <EmptyState onUpload={handleUploadClick} />
           )}
 
@@ -213,8 +214,20 @@ export default function App() {
                 />
               )}
 
+              {activeTab === 'process' && (
+                <ProcessPage />
+              )}
+
             </div>
           )}
+          
+          {/* Allow ProcessPage to render even if there is no data uploaded yet, so users can read docs before uploading! */}
+          {!hasData && !isLoading && !error && activeTab === 'process' && (
+             <div className="space-y-8 animate-in fade-in duration-500 pb-12 mt-8">
+               <ProcessPage />
+             </div>
+          )}
+
         </main>
       </div>
 

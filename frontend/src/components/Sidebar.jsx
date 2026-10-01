@@ -1,12 +1,13 @@
 import React from 'react';
-import { LayoutDashboard, Database, Lightbulb, Activity, ArrowRightLeft, BarChart2, X } from 'lucide-react';
+import { LayoutDashboard, Database, Lightbulb, Activity, ArrowRightLeft, BookOpen, BarChart2, X } from 'lucide-react';
 
 export default function Sidebar({ activeTab, setActiveTab, isOpen, onClose }) {
   const navItems = [
     { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
     { id: 'compare', label: 'Compare Data', icon: ArrowRightLeft },
     { id: 'insights', label: 'AI Insights', icon: Lightbulb },
-    { id: 'what-if', label: 'What-If Simulator', icon: Activity }
+    { id: 'what-if', label: 'What-If Simulator', icon: Activity },
+    { id: 'process', label: 'How it Works', icon: BookOpen }
   ];
 
   return (
