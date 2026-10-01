@@ -1,0 +1,13 @@
+﻿date,product,category,region,quantity,unit_price,revenue,customer_type
+2026-07-01,Enterprise ERP,Software,North,2,500000,1000000,Enterprise
+2026-07-15,CRM License,Software,South,3,225000,675000,Mid-Market
+2026-08-05,Laptop Pro X,Hardware,West,15,120000,1800000,Enterprise
+2026-08-20,Cloud Hosting,Services,East,2,80000,160000,Startup
+2026-09-10,Mechanical Keyboard,Hardware,North,60,15000,900000,Mid-Market
+2026-09-25,Enterprise ERP,Software,East,1,500000,500000,Enterprise
+2026-10-05,Smartphone Z,Hardware,South,8,160000,1280000,Startup
+2026-10-18,IT Consulting,Services,West,2,150000,300000,Enterprise
+2026-11-02,CRM License,Software,North,1,225000,225000,Mid-Market
+2026-11-20,Laptop Pro X,Hardware,East,4,120000,480000,Startup
+2026-12-01,Cloud Hosting,Services,South,1,80000,80000,Enterprise
+2026-12-15,Mechanical Keyboard,Hardware,West,25,15000,375000,Mid-Market

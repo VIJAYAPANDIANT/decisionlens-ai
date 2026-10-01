@@ -14,14 +14,22 @@ import LoadingState from './components/LoadingState';
 import ErrorState from './components/ErrorState';
 import InsightsPage from './components/InsightsPage';
 import WhatIfPage from './components/WhatIfPage';
+import ComparePage from './components/ComparePage';
 import HowItWorksModal from './components/HowItWorksModal';
 import { uploadDataset } from './services/api';
 
 export default function App() {
   const [activeTab, setActiveTab] = useState('dashboard');
+  
+  // Primary Dataset
   const [analysis, setAnalysis] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+
+  // Secondary Dataset (for comparison)
+  const [analysisB, setAnalysisB] = useState(null);
+  const [isLoadingB, setIsLoadingB] = useState(false);
+
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isHelpOpen, setIsHelpOpen] = useState(false);
 
@@ -63,6 +71,33 @@ export default function App() {
       setIsLoading(false);
       // Reset input so the same file can be uploaded again if needed
       if (fileInputRef.current) fileInputRef.current.value = "";
+    }
+  };
+
+  const handleFileChangeB = async (event) => {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    if (file.size > 10 * 1024 * 1024) {
+      setError("File is too large. Maximum size is 10 MB.");
+      return;
+    }
+
+    if (!file.name.endsWith('.csv')) {
+      setError("Please upload a valid CSV file for comparison.");
+      return;
+    }
+
+    setIsLoadingB(true);
+    setError(null);
+
+    try {
+      const data = await uploadDataset(file);
+      setAnalysisB(data);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setIsLoadingB(false);
     }
   };
 
@@ -166,6 +201,16 @@ export default function App() {
 
               {activeTab === 'what-if' && (
                 <WhatIfPage currentRevenue={analysis?.kpis?.total_revenue} onUpload={handleUploadClick} />
+              )}
+
+              {activeTab === 'compare' && (
+                <ComparePage 
+                  analysisA={analysis} 
+                  analysisB={analysisB} 
+                  onUploadB={handleFileChangeB} 
+                  onClearB={() => setAnalysisB(null)}
+                  isLoading={isLoadingB}
+                />
               )}
 
             </div>
