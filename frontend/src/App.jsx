@@ -14,6 +14,7 @@ import LoadingState from './components/LoadingState';
 import ErrorState from './components/ErrorState';
 import InsightsPage from './components/InsightsPage';
 import WhatIfPage from './components/WhatIfPage';
+import HowItWorksModal from './components/HowItWorksModal';
 import { uploadDataset } from './services/api';
 
 export default function App() {
@@ -22,6 +23,13 @@ export default function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isHelpOpen, setIsHelpOpen] = useState(false);
+
+  React.useEffect(() => {
+    const handleOpenHelp = () => setIsHelpOpen(true);
+    window.addEventListener('open-help-modal', handleOpenHelp);
+    return () => window.removeEventListener('open-help-modal', handleOpenHelp);
+  }, []);
   
   const fileInputRef = useRef(null);
 
@@ -164,6 +172,8 @@ export default function App() {
           )}
         </main>
       </div>
+
+      <HowItWorksModal isOpen={isHelpOpen} onClose={() => setIsHelpOpen(false)} />
     </div>
   );
 }
