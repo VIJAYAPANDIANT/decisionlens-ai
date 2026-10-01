@@ -33,8 +33,4 @@ export const askAI = async (question) => {
   }
 };
 
-export const runScenario = async (params) => {
-  // TODO: Implement actual backend call
-  console.log('Mock run scenario:', params);
-  return { success: true };
-};
+

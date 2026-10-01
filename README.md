@@ -185,4 +185,6 @@ The following AI tools were utilized during the development of this project:
 - **Google Gemini API:** Used as the core product AI functionality (the Grounded AI Assistant).
 
 ## 20. Team
-- VIJAYAPANDIANT (Solo Developer / Antigravity assisted)
+- Rithika K
+- Ranjini K
+- Vijayapandian T
