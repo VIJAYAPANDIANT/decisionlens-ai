@@ -1,5 +1,5 @@
 import React from 'react';
-import { LayoutDashboard, Database, Lightbulb, Activity, Settings, BarChart2, X } from 'lucide-react';
+import { LayoutDashboard, Database, Lightbulb, Activity, BarChart2, X } from 'lucide-react';
 
 export default function Sidebar({ activeTab, setActiveTab, isOpen, onClose }) {
   const navItems = [
@@ -64,12 +64,6 @@ export default function Sidebar({ activeTab, setActiveTab, isOpen, onClose }) {
           })}
         </nav>
 
-        <div className="p-4 mt-auto border-t border-slate-800">
-          <button className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-400 hover:bg-slate-900 hover:text-slate-200 transition-all outline-none">
-            <Settings className="w-4 h-4 text-slate-500" />
-            Settings
-          </button>
-        </div>
       </div>
     </>
   );
