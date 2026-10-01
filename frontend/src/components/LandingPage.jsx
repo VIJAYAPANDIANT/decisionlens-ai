@@ -14,9 +14,6 @@ export default function LandingPage({ onEnterApp, onViewProcess }) {
           <span className="text-xl font-bold text-white tracking-tight">DecisionLens AI</span>
         </div>
         <div className="flex items-center gap-4">
-          <button onClick={onEnterApp} className="text-sm font-medium text-slate-300 hover:text-white transition-colors">
-            Sign In
-          </button>
           <button onClick={onEnterApp} className="bg-indigo-600 hover:bg-indigo-500 text-white px-4 py-2 rounded-lg text-sm font-medium transition-all shadow-lg shadow-indigo-900/20">
             Open Dashboard
           </button>
@@ -131,13 +128,7 @@ export default function LandingPage({ onEnterApp, onViewProcess }) {
             onClick={onEnterApp}
             className="flex items-center justify-center gap-2 bg-indigo-600 hover:bg-indigo-500 text-white px-8 py-3 rounded-lg text-sm font-semibold transition-all hover:shadow-xl hover:shadow-indigo-900/30"
           >
-            Create Account <ArrowRight className="w-4 h-4" />
-          </button>
-          <button 
-            onClick={onEnterApp}
-            className="flex items-center justify-center bg-slate-900 hover:bg-slate-800 border border-slate-700 text-white px-8 py-3 rounded-lg text-sm font-semibold transition-all"
-          >
-            Sign In
+            Open Dashboard <ArrowRight className="w-4 h-4" />
           </button>
         </div>
       </div>
