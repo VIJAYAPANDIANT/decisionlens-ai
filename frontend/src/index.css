@@ -21,3 +21,14 @@
     background: #475569;
   }
 }
+
+@media print {
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    color-adjust: exact !important;
+  }
+  section, .rounded-xl, .rounded-2xl {
+    page-break-inside: avoid;
+  }
+}

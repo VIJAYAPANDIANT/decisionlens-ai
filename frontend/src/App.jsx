@@ -115,7 +115,7 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-200 font-sans flex">
+    <div className="min-h-screen bg-slate-950 text-slate-200 font-sans flex print:bg-slate-950">
       {/* Hidden File Input */}
       <input 
         type="file" 
@@ -132,7 +132,7 @@ export default function App() {
         onClose={() => setIsMobileMenuOpen(false)}
       />
       
-      <div className="flex-1 flex flex-col min-h-screen min-w-0">
+      <div className="flex-1 flex flex-col min-h-screen min-w-0 print:block print:min-h-0 print:w-full">
         <Header 
           onUpload={handleUploadClick} 
           disabled={isLoading} 
@@ -140,7 +140,7 @@ export default function App() {
           analysisStatus={hasData ? analysis.dataset.filename : "No dataset uploaded"}
         />
         
-        <main className="flex-1 p-6 lg:p-8 overflow-y-auto custom-scrollbar">
+        <main className="flex-1 p-6 lg:p-8 overflow-y-auto custom-scrollbar print:overflow-visible print:h-auto print:p-0 print:block">
           {error && (
             <ErrorState message={error} onRetry={() => setError(null)} />
           )}

@@ -1,9 +1,9 @@
 import React from 'react';
-import { UploadCloud, Menu, CheckCircle2 } from 'lucide-react';
+import { UploadCloud, Menu, CheckCircle2, Download } from 'lucide-react';
 
 export default function Header({ onUpload, disabled, onMenuClick, analysisStatus }) {
   return (
-    <header className="h-16 border-b border-slate-800 bg-slate-950/80 backdrop-blur-md sticky top-0 z-40">
+    <header className="h-16 border-b border-slate-800 bg-slate-950/80 backdrop-blur-md sticky top-0 z-40 print:hidden">
       <div className="h-full px-4 sm:px-8 flex items-center justify-between">
         <div className="flex items-center gap-3">
           <button 
@@ -29,10 +29,21 @@ export default function Header({ onUpload, disabled, onMenuClick, analysisStatus
           )}
         </div>
         
-        <div className="flex items-center gap-4">
-          <div className="text-xs text-slate-400 truncate max-w-[120px] sm:max-w-none mr-2">
+        <div className="flex items-center gap-3 sm:gap-4">
+          <div className="text-xs text-slate-400 truncate max-w-[120px] sm:max-w-none hidden lg:block mr-2">
             {analysisStatus !== "No dataset uploaded" ? analysisStatus : ''}
           </div>
+
+          {analysisStatus !== "No dataset uploaded" && (
+            <button
+              onClick={() => window.print()}
+              className="flex items-center gap-2 bg-slate-800 hover:bg-slate-700 border border-slate-700 text-white px-3 py-2 rounded-lg text-sm font-medium transition-colors outline-none focus-visible:ring-2 focus-visible:ring-slate-500"
+              title="Download Dashboard as PDF"
+            >
+              <Download className="w-4 h-4" />
+              <span className="hidden sm:inline">Export PDF</span>
+            </button>
+          )}
           
           <button 
             onClick={onUpload}

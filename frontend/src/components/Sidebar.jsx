@@ -23,7 +23,7 @@ export default function Sidebar({ activeTab, setActiveTab, isOpen, onClose }) {
       {/* Sidebar container */}
       <div className={`
         fixed inset-y-0 left-0 z-50 w-64 border-r border-slate-800 bg-slate-950 flex flex-col transform transition-transform duration-300 ease-in-out
-        md:relative md:translate-x-0
+        md:relative md:translate-x-0 print:hidden
         ${isOpen ? 'translate-x-0' : '-translate-x-full'}
       `}>
         <div className="p-6 flex items-center justify-between">
