@@ -21,13 +21,17 @@ export default function KPICard({ title, value, change, type }) {
       
       <div>
         <div className="text-3xl font-bold text-white mb-2">{value}</div>
-        <div className="flex items-center gap-2 text-sm">
-          <div className={`flex items-center gap-1 font-semibold ${isPositive ? 'text-emerald-400' : 'text-rose-400'}`}>
-            {isPositive ? <TrendingUp className="w-4 h-4" /> : <TrendingDown className="w-4 h-4" />}
-            <span>{Math.abs(change)}%</span>
+        {change !== null && change !== undefined ? (
+          <div className="flex items-center gap-2 text-sm">
+            <div className={`flex items-center gap-1 font-semibold ${isPositive ? 'text-emerald-400' : 'text-rose-400'}`}>
+              {isPositive ? <TrendingUp className="w-4 h-4" /> : <TrendingDown className="w-4 h-4" />}
+              <span>{Math.abs(change)}%</span>
+            </div>
+            <span className="text-slate-500">vs previous period</span>
           </div>
-          <span className="text-slate-500">vs previous period</span>
-        </div>
+        ) : (
+          <div className="text-xs text-slate-500 mt-1">Calculated from uploaded dataset</div>
+        )}
       </div>
     </div>
   );

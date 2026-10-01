@@ -21,6 +21,7 @@ export default function App() {
   const [analysis, setAnalysis] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   
   const fileInputRef = useRef(null);
 
@@ -71,11 +72,21 @@ export default function App() {
       />
 
       {/* Sidebar */}
-      <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} />
+      <Sidebar 
+        activeTab={activeTab} 
+        setActiveTab={(tab) => { setActiveTab(tab); setIsMobileMenuOpen(false); }} 
+        isOpen={isMobileMenuOpen}
+        onClose={() => setIsMobileMenuOpen(false)}
+      />
       
       {/* Main Content Area */}
-      <div className="flex-1 flex flex-col min-h-screen">
-        <Header onUpload={handleUploadClick} disabled={isLoading} />
+      <div className="flex-1 flex flex-col min-h-screen min-w-0">
+        <Header 
+          onUpload={handleUploadClick} 
+          disabled={isLoading} 
+          onMenuClick={() => setIsMobileMenuOpen(true)}
+          analysisStatus={hasData ? analysis.dataset.filename : "No dataset uploaded"}
+        />
         
         <main className="flex-1 p-6 lg:p-8 overflow-y-auto custom-scrollbar">
           {error && (
