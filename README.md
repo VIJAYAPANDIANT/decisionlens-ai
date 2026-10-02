@@ -1,7 +1,8 @@
 <div align="center">
   <img src="./frontend/public/favicon.svg" width="100" height="100" alt="DecisionLens Logo" />
   <br />
-  <br />
+  
+  <h1>DecisionLens AI</h1>
 
   <img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" alt="React" />
   <img src="https://img.shields.io/badge/FastAPI-009688?style=for-the-badge&logo=FastAPI&logoColor=white" alt="FastAPI" />
@@ -11,8 +12,6 @@
   
   <br />
   <br />
-  
-  <h1>DecisionLens AI</h1>
   
   <p>
     <strong>An AI-powered decision intelligence engine that transforms raw business data into traceable insights, deterministic scenario analysis, and actionable recommendations.</strong>
@@ -31,17 +30,17 @@
 
 ## 🚨 The Problem
 
-Business leaders are constantly overwhelmed by raw data in spreadsheets. It takes too much time to calculate key performance indicators (KPIs), identify meaningful trends, and translate those numbers into actionable decisions. 
+Business leaders are constantly overwhelmed by raw data in spreadsheets. It takes too much time to calculate key performance indicators (KPIs), identify meaningful trends, and translate those numbers into actionable decisions.
 
 While AI chat models hold promise, relying purely on large language models to "read" spreadsheets directly often leads to **hallucinations**—where the AI invents data or hallucinates mathematical aggregations that don't exist, completely destroying trust in the system.
 
 ## 💡 The Solution
 
-**DecisionLens AI** solves this by enforcing a strict architectural boundary between **deterministic data processing** and **AI explanation**. 
+**DecisionLens AI** solves this by enforcing a strict architectural boundary between **deterministic data processing** and **AI explanation**.
 
 We use Python (Pandas/NumPy) to calculate mathematically verified KPIs, trend aggregations, and deterministic insights. These verified calculations form a secure, traceable "context window" that grounds the Gemini AI model. Users can ask natural language questions and simulate business scenarios with absolute confidence in the underlying numbers.
 
-***
+---
 
 ## ✨ Key Features
 
@@ -51,7 +50,7 @@ We use Python (Pandas/NumPy) to calculate mathematically verified KPIs, trend ag
 - **📈 What-If Simulator:** Model scenario projections (e.g., +10% sales) using transparent, strictly deterministic algebraic mathematics.
 - **📊 Dataset Comparison:** Upload multiple datasets side-by-side to visually compare period-over-period or region-over-region performance differences.
 
-***
+---
 
 ## 🏗️ Architecture
 
@@ -67,24 +66,27 @@ graph TD;
     G --> H
 ```
 
-*Core Principle: Math is for calculation. AI is for explanation.*
+_Core Principle: Math is for calculation. AI is for explanation._
 
-***
+---
 
 ## 🚀 Getting Started
 
 ### Prerequisites
+
 - Node.js (v18+)
 - Python (3.9+)
 - Google Gemini API Key
 
 ### 1. Clone the repository
+
 ```bash
 git clone https://github.com/VIJAYAPANDIANT/decisionlens-ai.git
 cd decisionlens-ai
 ```
 
 ### 2. Backend Setup
+
 ```bash
 cd backend
 python -m venv venv
@@ -93,13 +95,15 @@ source venv/bin/activate  # On Windows: venv\Scripts\activate
 pip install -r requirements.txt
 cp .env.example .env
 ```
-*Edit `.env` and configure `GEMINI_API_KEY` and `FRONTEND_URL=http://localhost:5173`.*
+
+_Edit `.env` and configure `GEMINI_API_KEY` and `FRONTEND_URL=http://localhost:5173`._
 
 ```bash
 python -m uvicorn app.main:app --reload --port 8000
 ```
 
 ### 3. Frontend Setup
+
 ```bash
 cd frontend
 npm install
@@ -109,35 +113,38 @@ npm run dev
 ```
 
 ### 4. Test the App
+
 Navigate to `http://localhost:5173` and upload the provided sample dataset located at:
 📁 `sample-data/sales_data.csv`
 
-***
+---
 
 ## 🔌 API Reference
 
-| Endpoint | Method | Description |
-| :--- | :---: | :--- |
-| `/api/health` | `GET` | Healthcheck endpoint to verify backend status. |
-| `/api/analyze`| `POST`| Parses CSV via Pandas, returning aggregated JSON KPIs and deterministic insights. |
-| `/api/ask` | `POST`| Queries Gemini AI against the verified JSON context payload. |
+| Endpoint       | Method | Description                                                                       |
+| :------------- | :----: | :-------------------------------------------------------------------------------- |
+| `/api/health`  | `GET`  | Healthcheck endpoint to verify backend status.                                    |
+| `/api/analyze` | `POST` | Parses CSV via Pandas, returning aggregated JSON KPIs and deterministic insights. |
+| `/api/ask`     | `POST` | Queries Gemini AI against the verified JSON context payload.                      |
 
-***
+---
 
 ## ☁️ Deployment
 
 DecisionLens AI is architected for immediate PAAS deployment.
 
 **Frontend (Vercel/Netlify):**
+
 - Build Command: `npm run build`
 - Output Dir: `dist`
 - Env: `VITE_API_URL`
 
 **Backend (Render/Railway):**
+
 - Start Command: `uvicorn app.main:app --host 0.0.0.0 --port $PORT`
 - Env: `GEMINI_API_KEY`, `FRONTEND_URL`
 
-***
+---
 
 ## 🏆 Hackathon Context
 
@@ -146,11 +153,13 @@ DecisionLens AI is architected for immediate PAAS deployment.
 - **AI Disclosure:** Antigravity (autonomous coding agent) was utilized for scaffolding and styling. Google Gemini API powers the grounded AI assistant.
 
 ### 👥 Team
+
 - Rithika K
 - Ranjini K
 - Vijayapandian T
 
-***
+---
+
 <div align="center">
   <sub>Built with ❤️ for Build Fast with AI 2026</sub>
 </div>
