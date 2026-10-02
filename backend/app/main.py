@@ -10,17 +10,11 @@ import os
 
 app = FastAPI(title="DecisionLens AI API")
 
-# Default to localhost for development, allow override for production
-frontend_url = os.getenv("FRONTEND_URL", "http://localhost:5173")
-origins = [frontend_url]
-# Allow specific deployed frontend domains if comma separated
-if "," in frontend_url:
-    origins = [url.strip() for url in frontend_url.split(",")]
-
+# Allow all origins for the hackathon to prevent deployment errors
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
-    allow_credentials=True,
+    allow_origins=["*"],
+    allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
 )
