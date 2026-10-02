@@ -28,6 +28,13 @@
 
 <br />
 
+## 🎥 Demo & Presentation
+
+- **Demo Video:** [Watch the DecisionLens AI Demo](https://drive.google.com/file/d/14OG63T1CqIUd96oXJncAKcVZn1gNim6a/view?usp=drive_link)
+- **Pitch Deck:** [View the Idea Deck Presentation](#) *(Included in project submission)*
+
+---
+
 ## The Problem
 
 Business leaders are constantly overwhelmed by raw data in spreadsheets. It takes too much time to calculate key performance indicators (KPIs), identify meaningful trends, and translate those numbers into actionable decisions.
