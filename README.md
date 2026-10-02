@@ -52,13 +52,41 @@ We use Python (Pandas/NumPy) to calculate mathematically verified KPIs, trend ag
 
 ---
 
-## Architecture
+## Tech Stack
+
+- **Frontend:** React 18, Vite, Tailwind CSS, Recharts, Lucide Icons
+- **Backend:** Python 3.9+, FastAPI, Pandas, NumPy, Uvicorn
+- **AI / LLM:** Google Gemini 1.5 API (`google-generativeai`)
+- **Deployment:** Vercel (Frontend Web Hosting), Render (Backend API Hosting)
+
+---
+
+## Requirements
+
+### Functional Requirements
+- **Data Ingestion:** The system must accept and validate standard CSV business data uploads up to 10MB.
+- **Deterministic Analytics:** The system must automatically calculate Revenue, Orders, Average Order Value (AOV), and Growth metrics using exact math.
+- **Evidence Traceability:** The system must generate business insights accompanied by a verifiable "Evidence Panel" showing exact row calculations.
+- **Grounded Q&A:** The system must allow users to ask natural language questions, answering strictly based on the provided dataset context.
+- **Scenario Modeling:** The system must provide a What-If simulator to model percentage-based revenue changes deterministically.
+- **Data Comparison:** The system must support side-by-side comparison of two distinct datasets.
+
+### Non-Functional Requirements
+- **Security & Privacy:** Raw CSV data must be processed entirely in-memory and immediately discarded. No persistent database storage of raw client data is permitted.
+- **Accuracy:** The AI must act exclusively as an explanation engine. It is strictly prohibited from executing mathematical calculations to prevent hallucinations.
+- **Performance:** CSV processing and dashboard generation must complete in under 3 seconds.
+- **Reliability:** The application must gracefully degrade and display helpful error states if the external Gemini AI API is unreachable.
+- **Usability:** The interface must be responsive, rendering perfectly on both desktop and mobile devices.
+
+---
+
+## System Architecture
 
 ```mermaid
 graph TD;
     A[User CSV Upload] -->|React/Vite| B(FastAPI Backend)
-    B --> C{Pandas / NumPy}
-    C -->|Mathematical Truth| D[Verified Analysis JSON]
+    B --> C{Pandas / NumPy Engine}
+    C -->|Calculates Mathematical Truth| D[Verified Analysis JSON]
     D --> E(Frontend Visualizations)
     D -->|Context Payload| F(Google Gemini API)
     F -->|Natural Language| G[Grounded AI Explanation]
@@ -67,6 +95,52 @@ graph TD;
 ```
 
 *Core Principle: Math is for calculation. AI is for explanation.*
+
+---
+
+## Use Case Diagram
+
+```mermaid
+flowchart LR
+    Actor((Business User))
+    
+    subgraph DecisionLens AI System
+        UC1[Upload Business CSV]
+        UC2[View KPI Dashboard]
+        UC3[Analyze Regional Trends]
+        UC4[Inspect Traceable Insights]
+        UC5[Simulate What-If Scenarios]
+        UC6[Ask AI Assistant]
+        UC7[Export PDF Report]
+    end
+    
+    Actor --> UC1
+    Actor --> UC2
+    Actor --> UC3
+    Actor --> UC4
+    Actor --> UC5
+    Actor --> UC6
+    Actor --> UC7
+```
+
+---
+
+## Entity Relationship (ER) Diagram
+
+*Note: Data is processed in-memory, but this models the object-relational structure during runtime.*
+
+```mermaid
+erDiagram
+    USER ||--o{ DATASET : uploads
+    DATASET ||--|{ KPI_METRICS : generates
+    DATASET ||--|{ INSIGHT : generates
+    DATASET ||--|{ REGIONAL_DATA : contains
+    DATASET ||--|{ CATEGORY_DATA : contains
+    INSIGHT ||--|{ EVIDENCE : backed_by
+    USER ||--o{ AI_QUERY : asks
+    AI_QUERY }|--|| DATASET : derives_context_from
+    AI_QUERY ||--|| AI_RESPONSE : receives
+```
 
 ---
 
