@@ -18,23 +18,23 @@
   </p>
 
   <p>
-    <a href="#problem">Problem</a> •
-    <a href="#solution">Solution</a> •
-    <a href="#architecture">Architecture</a> •
-    <a href="#getting-started">Getting Started</a> •
+    <a href="#problem">Problem</a> |
+    <a href="#solution">Solution</a> |
+    <a href="#architecture">Architecture</a> |
+    <a href="#getting-started">Getting Started</a> |
     <a href="#api-reference">API</a>
   </p>
 </div>
 
 <br />
 
-## 🚨 The Problem
+## The Problem
 
 Business leaders are constantly overwhelmed by raw data in spreadsheets. It takes too much time to calculate key performance indicators (KPIs), identify meaningful trends, and translate those numbers into actionable decisions.
 
-While AI chat models hold promise, relying purely on large language models to "read" spreadsheets directly often leads to **hallucinations**—where the AI invents data or hallucinates mathematical aggregations that don't exist, completely destroying trust in the system.
+While AI chat models hold promise, relying purely on large language models to "read" spreadsheets directly often leads to **hallucinations** - where the AI invents data or hallucinates mathematical aggregations that don't exist, completely destroying trust in the system.
 
-## 💡 The Solution
+## The Solution
 
 **DecisionLens AI** solves this by enforcing a strict architectural boundary between **deterministic data processing** and **AI explanation**.
 
@@ -42,17 +42,17 @@ We use Python (Pandas/NumPy) to calculate mathematically verified KPIs, trend ag
 
 ---
 
-## ✨ Key Features
+## Key Features
 
-- **⚡ Instant Business Dashboards:** Drag and drop a standard sales CSV and instantly view revenue, orders, AOV, and category/regional performance breakdowns.
-- **🔍 Traceable Insights:** Deterministic backend rules generate insights with a transparent "Evidence Panel", showing users exactly which raw data points support the claim.
-- **🤖 Grounded AI Assistant:** Ask questions about your business. Google Gemini is provided only with the verified context, acting purely as an explanation engine rather than a calculator.
-- **📈 What-If Simulator:** Model scenario projections (e.g., +10% sales) using transparent, strictly deterministic algebraic mathematics.
-- **📊 Dataset Comparison:** Upload multiple datasets side-by-side to visually compare period-over-period or region-over-region performance differences.
+- **Instant Business Dashboards:** Drag and drop a standard sales CSV and instantly view revenue, orders, AOV, and category/regional performance breakdowns.
+- **Traceable Insights:** Deterministic backend rules generate insights with a transparent "Evidence Panel", showing users exactly which raw data points support the claim.
+- **Grounded AI Assistant:** Ask questions about your business. Google Gemini is provided only with the verified context, acting purely as an explanation engine rather than a calculator.
+- **What-If Simulator:** Model scenario projections (e.g., +10% sales) using transparent, strictly deterministic algebraic mathematics.
+- **Dataset Comparison:** Upload multiple datasets side-by-side to visually compare period-over-period or region-over-region performance differences.
 
 ---
 
-## 🏗️ Architecture
+## Architecture
 
 ```mermaid
 graph TD;
@@ -66,11 +66,11 @@ graph TD;
     G --> H
 ```
 
-_Core Principle: Math is for calculation. AI is for explanation._
+*Core Principle: Math is for calculation. AI is for explanation.*
 
 ---
 
-## 🚀 Getting Started
+## Getting Started
 
 ### Prerequisites
 
@@ -96,7 +96,7 @@ pip install -r requirements.txt
 cp .env.example .env
 ```
 
-_Edit `.env` and configure `GEMINI_API_KEY` and `FRONTEND_URL=http://localhost:5173`._
+*Edit `.env` and configure `GEMINI_API_KEY` and `FRONTEND_URL=http://localhost:5173`.*
 
 ```bash
 python -m uvicorn app.main:app --reload --port 8000
@@ -115,11 +115,11 @@ npm run dev
 ### 4. Test the App
 
 Navigate to `http://localhost:5173` and upload the provided sample dataset located at:
-📁 `sample-data/sales_data.csv`
+`sample-data/sales_data.csv`
 
 ---
 
-## 🔌 API Reference
+## API Reference
 
 | Endpoint       | Method | Description                                                                       |
 | :------------- | :----: | :-------------------------------------------------------------------------------- |
@@ -129,7 +129,7 @@ Navigate to `http://localhost:5173` and upload the provided sample dataset locat
 
 ---
 
-## ☁️ Deployment
+## Deployment
 
 DecisionLens AI is architected for immediate PAAS deployment.
 
@@ -146,13 +146,13 @@ DecisionLens AI is architected for immediate PAAS deployment.
 
 ---
 
-## 🏆 Hackathon Context
+## Hackathon Context
 
 - **Event:** Build Fast with AI 2026
-- **Track:** PS-04 — AI Decision Engine for Business Data
+- **Track:** PS-04 - AI Decision Engine for Business Data
 - **AI Disclosure:** Antigravity (autonomous coding agent) was utilized for scaffolding and styling. Google Gemini API powers the grounded AI assistant.
 
-### 👥 Team
+### Team
 
 - Rithika K
 - Ranjini K
@@ -161,5 +161,5 @@ DecisionLens AI is architected for immediate PAAS deployment.
 ---
 
 <div align="center">
-  <sub>Built with ❤️ for Build Fast with AI 2026</sub>
+  <sub>Built with care for Build Fast with AI 2026</sub>
 </div>
