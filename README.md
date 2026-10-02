@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="https://raw.githubusercontent.com/lucide-icons/lucide/main/icons/bar-chart-2.svg" width="100" height="100" alt="DecisionLens Logo" />
+  <img src="./frontend/public/favicon.svg" width="100" height="100" alt="DecisionLens Logo" />
   <br />
   <br />
 
