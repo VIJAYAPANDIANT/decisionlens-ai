@@ -1,4 +1,8 @@
 <div align="center">
+  <img src="https://raw.githubusercontent.com/lucide-icons/lucide/main/icons/bar-chart-2.svg" width="100" height="100" alt="DecisionLens Logo" />
+  <br />
+  <br />
+
   <img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" alt="React" />
   <img src="https://img.shields.io/badge/FastAPI-009688?style=for-the-badge&logo=FastAPI&logoColor=white" alt="FastAPI" />
   <img src="https://img.shields.io/badge/Pandas-150458?style=for-the-badge&logo=pandas&logoColor=white" alt="Pandas" />
@@ -8,7 +12,7 @@
   <br />
   <br />
   
-  <h1>📊 DecisionLens AI</h1>
+  <h1>DecisionLens AI</h1>
   
   <p>
     <strong>An AI-powered decision intelligence engine that transforms raw business data into traceable insights, deterministic scenario analysis, and actionable recommendations.</strong>
