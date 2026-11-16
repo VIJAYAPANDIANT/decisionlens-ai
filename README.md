@@ -31,7 +31,7 @@
 ## 🎥 Demo & Presentation
 
 - **Demo Video:** [Watch the DecisionLens AI Demo](https://drive.google.com/file/d/14OG63T1CqIUd96oXJncAKcVZn1gNim6a/view?usp=drive_link)
-- **Pitch Deck:** [View the Idea Deck Presentation](#) *(Included in project submission)*
+- **Pitch Deck / Presentation:** [View the DecisionLens AI Presentation (Google Slides)](https://docs.google.com/presentation/d/1ezXoM_pdAsv11dNMo8innKeXy10LBjMm/edit?usp=sharing&ouid=107535823868913786052&rtpof=true&sd=true)
 
 ---
 
