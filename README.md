@@ -227,11 +227,10 @@ DecisionLens AI is architected for immediate PAAS deployment.
 
 ---
 
-## Hackathon Context
+## Hackathon Project
 
 - **Event:** Build Fast with AI 2026
 - **Track:** PS-04 - AI Decision Engine for Business Data
-- **AI Disclosure:** Antigravity (autonomous coding agent) was utilized for scaffolding and styling. Google Gemini API powers the grounded AI assistant.
 
 ### Team
 
