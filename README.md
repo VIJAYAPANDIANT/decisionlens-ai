@@ -229,9 +229,6 @@ DecisionLens AI is architected for immediate PAAS deployment.
 
 ## Hackathon Project
 
-- **Event:** Build Fast with AI 2026
-- **Track:** PS-04 - AI Decision Engine for Business Data
-
 ### Team
 
 - Rithika K
@@ -241,5 +238,5 @@ DecisionLens AI is architected for immediate PAAS deployment.
 ---
 
 <div align="center">
-  <sub>Built with care for Build Fast with AI 2026</sub>
+  <sub>Built with care · DecisionLens AI</sub>
 </div>
